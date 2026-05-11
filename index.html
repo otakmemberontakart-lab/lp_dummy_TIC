@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Influence Code — Bangun Karisma, Otoritas, dan Daya Pengaruh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================
+     CSS VARIABLES — DESIGN SYSTEM
+  ============================================ */
+  :root {
+    --bg-primary:    #0D0D0D;
+    --bg-secondary:  #141414;
+    --bg-elevated:   #1A1A1A;
+    --bg-card:       #1E1A14;
+
+    --gold:          #C9A84C;
+    --gold-light:    #E8C96A;
+    --gold-deep:     #8A6A1F;
+    --gold-glow:     rgba(201, 168, 76, 0.15);
+    --gold-border:   rgba(201, 168, 76, 0.25);
+
+    --text-primary:  #F5F0E8;
+    --text-muted:    #A89880;
+    --text-subtle:   #6B5B45;
+
+    --divider:       #2A2218;
+
+    --font-heading:  'Playfair Display', Georgia, serif;
+    --font-body:     'Inter', system-ui, sans-serif;
+
+    --max-width:     720px;
+    --radius:        4px;
+    --radius-lg:     8px;
+  }
+
+  /* ============================================
+     RESET & BASE
+  ============================================ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ============================================
+     TYPOGRAPHY
+  ============================================ */
+  h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(32px, 6vw, 58px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: clamp(24px, 4vw, 40px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    font-family: var(--font-heading);
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  p {
+    font-size: clamp(15px, 1.8vw, 17px);
+    line-height: 1.8;
+    color: var(--text-primary);
+  }
+
+  .text-muted { color: var(--text-muted); }
+  .text-gold { color: var(--gold); }
+
+  .label {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* ============================================
+     LAYOUT
+  ============================================ */
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .section {
+    padding: 80px 0;
+  }
+
+  .section--dark     { background: var(--bg-primary); }
+  .section--mid      { background: var(--bg-secondary); }
+  .section--elevated { background: var(--bg-elevated); }
+
+  /* ============================================
+     GOLD DECORATIVE LINE
+  ============================================ */
+  .gold-line {
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin-bottom: 20px;
+    transition: width 0.8s ease;
+  }
+  .gold-line.revealed { width: 56px; }
+
+  /* ============================================
+     SECTION HEADLINE PATTERN
+  ============================================ */
+  .section-header {
+    margin-bottom: 48px;
+  }
+
+  .section-header h2,
+  .section-header h3 {
+    margin-top: 12px;
+  }
+
+  /* ============================================
+     ANIMATIONS
+  ============================================ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes subtlePulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.5); }
+    50%     { box-shadow: 0 0 0 10px rgba(201,168,76,0); }
+  }
+
+  @keyframes goldFlash {
+    0%   { color: var(--text-muted); }
+    100% { color: var(--gold); }
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ============================================
+     ABOVE THE FOLD — HERO
+  ============================================ */
+  .hero {
+    background: var(--bg-primary);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 100svh;
+    display: flex;
+    align-items: stretch;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+    align-items: center;
+    gap: 60px;
+    min-height: 100svh;
+  }
+
+  .hero-content {
+    padding: 80px 0;
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    animation: fadeIn 0.8s ease both;
+  }
+
+  .hero-eyebrow span {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .hero-eyebrow-line {
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.6;
+  }
+
+  .hero h1 {
+    animation: fadeUp 0.9s ease 0.1s both;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--gold);
+    position: relative;
+  }
+
+  .hero-sub {
+    font-size: clamp(15px, 1.8vw, 17px);
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 40px;
+    animation: fadeUp 0.9s ease 0.25s both;
+  }
+
+  .hero-cta-wrap {
+    animation: fadeUp 0.9s ease 0.35s both;
+  }
+
+  .hero-image-wrap {
+    position: relative;
+    height: 100%;
+    min-height: 600px;
+    animation: fadeIn 1.2s ease 0.2s both;
+  }
+
+  .hero-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .hero-image-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      var(--bg-primary) 0%,
+      transparent 30%
+    ), linear-gradient(
+      to top,
+      var(--bg-primary) 0%,
+      transparent 20%
+    );
+    pointer-events: none;
+  }
+
+  /* ============================================
+     CTA BUTTON
+  ============================================ */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: #0D0D0D;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    padding: 16px 32px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+    animation: subtlePulse 2.5s ease infinite;
+    white-space: nowrap;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+    animation: none;
+    box-shadow: 0 8px 32px rgba(201,168,76,0.3);
+  }
+
+  .btn-primary .arrow {
+    font-size: 18px;
+    transition: transform 0.2s ease;
+  }
+
+  .btn-primary:hover .arrow { transform: translateX(4px); }
+
+  .btn-primary--full {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .btn-primary--large {
+    font-size: 16px;
+    padding: 20px 40px;
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--gold);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 14px 28px;
+    border-radius: var(--radius);
+    border: 1px solid var(--gold-border);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-ghost:hover {
+    background: var(--gold-glow);
+    border-color: var(--gold);
+  }
+
+  .trust-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .trust-badge .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+
+  /* ============================================
+     SECTION: NARRATIVE / PAIN
+  ============================================ */
+  .narrative-block {
+    border-left: 2px solid var(--gold-border);
+    padding-left: 28px;
+    margin: 32px 0;
+  }
+
+  .narrative-block p {
+    margin-bottom: 16px;
+  }
+  .narrative-block p:last-child { margin-bottom: 0; }
+
+  .callout-text {
+    font-family: var(--font-heading);
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-style: italic;
+    color: var(--text-primary);
+    line-height: 1.5;
+    margin: 40px 0;
+    padding: 28px 32px;
+    border-top: 1px solid var(--gold-border);
+    border-bottom: 1px solid var(--gold-border);
+    text-align: center;
+  }
+
+  /* ============================================
+     SECTION: MECHANISM — 3 PILLARS
+  ============================================ */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 40px;
+  }
+
+  .pillar-card {
+    background: var(--bg-card);
+    padding: 36px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pillar-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+  }
+
+  .pillar-card.visible::before { transform: scaleX(1); }
+
+  .pillar-number {
+    font-family: var(--font-heading);
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--gold);
+    opacity: 0.2;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .pillar-title {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .pillar-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ============================================
+     SECTION: PRODUCT REVEAL
+  ============================================ */
+  .product-block {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 56px;
+    align-items: start;
+    margin-top: 48px;
+  }
+
+  .product-mockup {
+    position: sticky;
+    top: 40px;
+  }
+
+  .product-mockup img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    box-shadow:
+      0 24px 64px rgba(0,0,0,0.6),
+      0 0 0 1px var(--gold-border),
+      0 0 80px rgba(201,168,76,0.08);
+  }
+
+  .product-tag {
+    display: inline-block;
+    background: var(--gold-glow);
+    border: 1px solid var(--gold-border);
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  .benefit-list {
+    list-style: none;
+    margin-top: 32px;
+  }
+
+  .benefit-list li {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--divider);
+    font-size: 15px;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+
+  .benefit-list li:last-child { border-bottom: none; }
+
+  .benefit-icon {
+    color: var(--gold);
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ============================================
+     SECTION: BONUS
+  ============================================ */
+  .bonus-card {
+    background: var(--bg-card);
+    border: 1px solid var(--gold-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-top: 40px;
+  }
+
+  .bonus-card-header {
+    background: linear-gradient(135deg, #1A1408, #241C0A);
+    padding: 32px 36px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    border-bottom: 1px solid var(--gold-border);
+  }
+
+  .bonus-badge {
+    background: var(--gold);
+    color: #0D0D0D;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .bonus-card-header h3 {
+    font-size: clamp(18px, 2.5vw, 22px);
+    color: var(--text-primary);
+  }
+
+  .bonus-items {
+    padding: 32px 36px;
+    display: grid;
+    gap: 24px;
+  }
+
+  .bonus-item {
+    display: flex;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .bonus-item-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--gold-glow);
+    border: 1px solid var(--gold-border);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .bonus-item-content h4 {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .bonus-item-content p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ============================================
+     SECTION: VALUE STACK
+  ============================================ */
+  .value-table {
+    background: var(--bg-card);
+    border: 1px solid var(--gold-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-top: 40px;
+  }
+
+  .value-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .value-row:last-child { border-bottom: none; }
+
+  .value-row--total {
+    background: var(--gold-glow);
+    border-top: 1px solid var(--gold-border) !important;
+  }
+
+  .value-row--today {
+    background: linear-gradient(135deg, #1A1408, #241C0A);
+    border-top: 2px solid var(--gold) !important;
+  }
+
+  .value-label {
+    font-size: 15px;
+    color: var(--text-primary);
+  }
+
+  .value-label.total-label {
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .value-label.today-label {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .value-price {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: line-through;
+  }
+
+  .value-price.total-price {
+    text-decoration: line-through;
+    font-weight: 600;
+  }
+
+  .value-price.today-price {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  /* ============================================
+     SECTION: CTA MAIN (GOLD BG)
+  ============================================ */
+  .section-cta-main {
+    background: linear-gradient(135deg, #1A1205, #241A07, #1A1205);
+    border-top: 1px solid var(--gold-border);
+    border-bottom: 1px solid var(--gold-border);
+    padding: 80px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-cta-main::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(201,168,76,0.08), transparent);
+    pointer-events: none;
+  }
+
+  .cta-price-display {
+    font-family: var(--font-heading);
+    font-size: clamp(36px, 6vw, 56px);
+    font-weight: 900;
+    color: var(--gold);
+    margin: 24px 0 8px;
+    line-height: 1;
+  }
+
+  .cta-price-original {
+    font-size: 16px;
+    color: var(--text-subtle);
+    text-decoration: line-through;
+    margin-bottom: 32px;
+  }
+
+  /* ============================================
+     SECTION: UPSELL
+  ============================================ */
+  .upsell-card {
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    margin-top: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .upsell-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* ============================================
+     SECTION: HOW IT WORKS
+  ============================================ */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 48px;
+  }
+
+  .step-card {
+    background: var(--bg-card);
+    padding: 36px 28px;
+  }
+
+  .step-number {
+    font-family: var(--font-heading);
+    font-size: 56px;
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+  }
+
+  .step-title {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+  }
+
+  .step-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ============================================
+     SECTION: FAQ
+  ============================================ */
+  .faq-list {
+    margin-top: 48px;
+    display: grid;
+    gap: 2px;
+  }
+
+  .faq-item {
+    background: var(--bg-card);
+    border-left: 2px solid transparent;
+    transition: border-color 0.3s ease;
+    cursor: pointer;
+  }
+
+  .faq-item.open {
+    border-left-color: var(--gold);
+  }
+
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 28px;
+    gap: 16px;
+  }
+
+  .faq-question span {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+
+  .faq-icon {
+    color: var(--gold);
+    font-size: 20px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    font-weight: 300;
+    line-height: 1;
+  }
+
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+    padding: 0 28px;
+  }
+
+  .faq-item.open .faq-answer {
+    max-height: 300px;
+    padding: 0 28px 24px;
+  }
+
+  .faq-answer p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.75;
+    border-top: 1px solid var(--divider);
+    padding-top: 16px;
+  }
+
+  /* ============================================
+     SECTION: TRANSFORMATION IMAGE
+  ============================================ */
+  .transformation-wrap {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-top: 48px;
+  }
+
+  .transformation-wrap img {
+    width: 100%;
+    max-height: 520px;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+  }
+
+  .transformation-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(13,13,13,0.95) 0%,
+      rgba(13,13,13,0.3) 50%,
+      transparent 100%
+    );
+    display: flex;
+    align-items: flex-end;
+    padding: 40px;
+  }
+
+  .transformation-caption {
+    font-family: var(--font-heading);
+    font-size: clamp(20px, 3vw, 28px);
+    font-style: italic;
+    color: var(--text-primary);
+    line-height: 1.4;
+    max-width: 480px;
+  }
+
+  .transformation-caption em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  /* ============================================
+     FINAL CLOSE
+  ============================================ */
+  .final-close {
+    text-align: center;
+    padding: 100px 0;
+    background: var(--bg-primary);
+    position: relative;
+  }
+
+  .final-close::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(201,168,76,0.04), transparent);
+    pointer-events: none;
+  }
+
+  .final-close h2 {
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .final-close .headline-gold {
+    font-family: var(--font-heading);
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 900;
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin-bottom: 32px;
+  }
+
+  .final-badges {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .final-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--bg-elevated);
+    border: 1px solid var(--divider);
+    padding: 6px 14px;
+    border-radius: 100px;
+  }
+
+  .final-badge .check { color: var(--gold); }
+
+  /* ============================================
+     STICKY CTA — MOBILE
+  ============================================ */
+  .sticky-cta {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    padding: 12px 20px 20px;
+    background: linear-gradient(to top, #0D0D0D 70%, transparent);
+  }
+
+  /* ============================================
+     DIVIDER
+  ============================================ */
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--divider);
+    margin: 0;
+  }
+
+  hr.gold-divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+    margin: 48px 0;
+  }
+
+  /* ============================================
+     RESPONSIVE — MOBILE FIRST
+  ============================================ */
+  @media (max-width: 900px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      padding: 0;
+      gap: 0;
+    }
+
+    .hero-content {
+      padding: 60px 24px 40px;
+      order: 2;
+    }
+
+    .hero-image-wrap {
+      order: 1;
+      min-height: 360px;
+      height: 360px;
+    }
+
+    .hero-image-wrap::after {
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        var(--bg-primary) 90%
+      ), linear-gradient(
+        to top,
+        var(--bg-primary) 0%,
+        transparent 40%
+      );
+    }
+
+    .pillars-grid {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    .product-block {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .product-mockup {
+      position: static;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    .steps-grid {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    .bonus-card-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .sticky-cta { display: block; }
+
+    .section { padding: 60px 0; }
+
+    .value-row { padding: 18px 24px; }
+
+    .upsell-card { padding: 28px 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-image-wrap { min-height: 280px; height: 280px; }
+    .trust-badges { flex-direction: column; gap: 10px; }
+    .transformation-overlay { padding: 24px; }
+    .bonus-items { padding: 24px; }
+    .section-cta-main { padding: 60px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     HERO — ABOVE THE FOLD
+============================================ -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <span>Playbook · Karisma &amp; Otoritas</span>
+      </div>
+
+      <h1>Kenapa Orang Yang<br>Lebih Kurang Pintar<br>Dari Kamu Bisa Lebih<br><em>Dihormatin</em> Saat Ngomong?!</h1>
+
+      <p class="hero-sub">
+        Playbook buat bikin cara ngomongmu terdengar lebih tenang, lebih berbobot, dan susah diabaikan — gak perlu jadi agresif, gak perlu berubah jadi orang lain, bahkan kalau kamu tipe yang lebih suka dengerin daripada ngomong keras-keras.
+      </p>
+
+      <div class="hero-cta-wrap">
+        <a href="#order" class="btn-primary btn-primary--large">
+          Aku Mau Ngomong Lebih Berbobot <span class="arrow">→</span>
+        </a>
+        <div class="trust-badges">
+          <span class="trust-badge"><span class="dot"></span>Akses Seumur Hidup</span>
+          <span class="trust-badge"><span class="dot"></span>Download Langsung</span>
+          <span class="trust-badge"><span class="dot"></span>Pembayaran Aman</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-image-wrap">
+      <img
+        src="https://drive.google.com/thumbnail?id=15V7wE5H4Qkyu_w-EADaxkU_6IR9odQHy&sz=w1000"
+        alt="Speaker didengarkan dengan penuh perhatian"
+        loading="eager"
+      >
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     SECTION 1 — OPENING NARRATIVE
+============================================ -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="gold-line"></div>
+      <h2>Kamu Punya Isi,<br>Tapi Kok Rasanya Sering Gak Nyampe?</h2>
+    </div>
+
+    <div class="narrative-block reveal reveal-delay-1">
+      <p>Pernah gak, kamu udah ngomong sesuatu — udah dipikir, udah disusun — tapi orang-orang di ruangan itu kayak... ya udah gitu aja?</p>
+      <p>Gak ada yang salah sama ide kamu. Gak ada yang bilang kamu keliru.</p>
+      <p>Tapi gak ada juga yang beneran dengerin.</p>
+      <p>Terus beberapa menit kemudian, orang lain ngomong hal yang mirip sama yang kamu bilang — dan tiba-tiba semua orang noleh, ngangguk, engage.</p>
+    </div>
+
+    <div class="callout-text reveal reveal-delay-2">
+      "Lah, itu kan yang tadi aku bilang?"
+    </div>
+
+    <p class="reveal reveal-delay-3" style="color: var(--text-muted);">
+      Itu bukan kebetulan. Dan itu bukan karena mereka lebih pintar dari kamu.
+    </p>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     SECTION 2 — ENEMY REFRAME
+============================================ -->
+<section class="section section--mid">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="gold-line"></div>
+      <h2>Masalahnya Bukan Di Isi Kepala Kamu.</h2>
+      <h3 style="color: var(--text-muted); font-weight: 400; margin-top: 12px; font-family: var(--font-body); font-size: clamp(16px,2vw,18px);">Masalahnya Di Sinyal Yang Kamu Kirim Tanpa Sadar.</h3>
+    </div>
+
+    <p class="reveal reveal-delay-1" style="margin-bottom: 20px;">
+      Selama ini mungkin kamu mikir masalahnya ada di rasa percaya diri. Atau pengalaman. Atau mungkin emang <em style="color:var(--text-muted); font-style:normal;">"bukan tipe yang enak didengar."</em>
+    </p>
+
+    <p class="reveal reveal-delay-1" style="margin-bottom: 20px;">
+      Tapi coba perhatiin orang-orang yang selalu dianggep di ruangan. Mereka gak selalu yang paling pintar. Gak selalu yang paling senior.
+    </p>
+
+    <p class="reveal reveal-delay-2" style="margin-bottom: 32px;">
+      Yang bikin beda cuma satu: <strong style="color: var(--text-primary);">cara mereka ngomong ngirim sinyal yang berbeda.</strong> Tenang. Terstruktur. Punya bobot.
+    </p>
+
+    <p class="reveal reveal-delay-2" style="margin-bottom: 20px;">
+      Dan otak manusia — sebelum sempat mikirin isi pesannya — udah nangkep sinyal itu duluan. Dalam hitungan detik, orang udah mutusin: ini orang layak didengerin, atau bisa diabaikan?
+    </p>
+
+    <p class="reveal reveal-delay-3" style="color: var(--gold); font-weight: 500;">
+      Kamu gak bisa ngubah keputusan itu dengan lebih keras berusaha. Kamu cuma bisa ngubahnya dengan ngubah sinyalnya.
+    </p>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     SECTION 3 — MECHANISM
+============================================ -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="gold-line"></div>
+      <h2>Tiga Hal Yang Nentuin Apakah Kamu Kedengeran Berbobot Atau Gampang Digeser</h2>
+    </div>
+
+    <div class="pillars-grid">
+      <div class="pillar-card reveal reveal-delay-1">
+        <div class="pillar-number">01</div>
+        <div class="pillar-title">Presence</div>
+        <p class="pillar-desc">Sinyal yang kamu kirim bahkan sebelum kata pertama keluar. Tempo, nada, cara kamu buka kalimat. Ini yang bikin orang mutusin — setengah detik pertama — mau dengerin kamu beneran atau cuma nunggu giliran ngomong sendiri.</p>
+      </div>
+      <div class="pillar-card reveal reveal-delay-2">
+        <div class="pillar-number">02</div>
+        <div class="pillar-title">Delivery</div>
+        <p class="pillar-desc">Gimana pikiran kamu nyampe ke telinga orang lain. Rapi dan langsung ke intinya, atau muter-muter sampai orang kehilangan benang merahnya di tengah jalan dan mulai mikirin hal lain.</p>
+      </div>
+      <div class="pillar-card reveal reveal-delay-3">
+        <div class="pillar-number">03</div>
+        <div class="pillar-title">Authority</div>
+        <p class="pillar-desc">Pilihan kata yang tanpa sadar nambahin atau ngebuang bobot dari setiap kalimat kamu. Satu kata yang salah bisa bikin pernyataan yang kuat kedengeran kayak kamu lagi minta izin.</p>
+      </div>
+    </div>
+
+    <p class="reveal" style="text-align: center; margin-top: 36px; color: var(--text-muted); font-style: italic;">
+      Ketiga hal ini bisa dilatih. Bukan bakat. Bukan kepribadian bawaan. Tapi pola — yang bisa dipelajari dan langsung dipasang.
+    </p>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     SECTION 4 — PRODUCT REVEAL
+============================================ -->
+<section class="section section--mid">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="gold-line"></div>
+      <span class="label">Main Product</span>
+      <h2 style="margin-top: 12px;">Kenalan Sama Playbook Yang Mecahin Cara Bicara Berpengaruh Jadi Pola Yang Bisa Langsung Kamu Pakai</h2>
+    </div>
+
+    <div class="product-block">
+      <div class="product-mockup reveal">
+        <img
+          src="https://drive.google.com/thumbnail?id=1zr5JqaRmrMG5VPfpJVT2DLWSBAPWO9oi&sz=w1000"
+          alt="The Influence Code"
+          loading="lazy"
+        >
+      </div>
+
+      <div>
+        <div class="product-tag">The Influence Code</div>
+        <h3 class="reveal">Playbook praktis yang ngebangun Presence, Delivery, dan Authority lewat pola-pola bicara konkret yang langsung bisa kamu coba di situasi nyata.</h3>
+
+        <p class="reveal reveal-delay-1" style="margin-top: 16px; color: var(--text-muted);">
+          Bukan ebook komunikasi umum. Bukan kumpulan tips motivasi. Bukan teori public speaking.
+        </p>
+
+        <p class="reveal reveal-delay-1" style="margin-top: 12px; color: var(--gold); font-weight: 500;">
+          Ini sistem buat bikin cara ngomongmu lebih susah diabaikan — dari obrolan biasa sampai situasi paling nentuin di karir kamu.
+        </p>
+
+        <ul class="benefit-list reveal reveal-delay-2">
+          <li>
+            <span class="benefit-icon">✦</span>
+            <span>Kenapa orang udah nilai kamu sebelum kata pertama selesai diucapin — dan cara ngubah penilaian itu sejak detik pertama</span>
+          </li>
+          <li>
+            <span class="benefit-icon">✦</span>
+            <span>Formula buat ngerapihin pikiran jadi kalimat yang gak bisa dipotong di tengah jalan</span>
+          </li>
+          <li>
+            <span class="benefit-icon">✦</span>
+            <span>Kata-kata yang tiap hari diem-diem ngerogotin otoritas kamu — plus penggantinya yang jauh lebih nancep</span>
+          </li>
+          <li>
+            <span class="benefit-icon">✦</span>
+            <span>Cara buka percakapan dan presentasi biar orang fokus sejak kalimat pertama, bukan setelah kamu udah setengah jalan</span>
+          </li>
+          <li>
+            <span class="benefit-icon">✦</span>
+            <span>Sistem latihan singkat yang bikin semua pola ini jadi refleks — bukan sesuatu yang harus kamu inget-inget tiap mau ngomong</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     SECTION 5 — BONUS REVEAL
+============================================ -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="gold-line"></div>
+      <h2>Biar Kamu Gak Cuma Baca —<br>Tapi Beneran Berubah Cara Ngomongnya</h2>
+    </div>
+
+    <p class="reveal" style="color: var(--text-muted);">
+      Order hari ini, kamu juga dapet <strong style="color: var(--text-primary);">The Ultimate Implementation Pack</strong> — companion tool yang dirancang biar semua yang ada di playbook beneran masuk ke cara ngomongmu sehari-hari. Bukan cuma ngerti, tapi ngelakuin.
+    </p>
+
+    <div class="bonus-card reveal reveal-delay-1">
+      <div class="bonus-card-header">
+        <span class="bonus-badge">Bonus Gratis</span>
+        <h3>The Ultimate Implementation Pack</h3>
+      </div>
+      <div class="bonus-items">
+        <div class="bonus-item">
+          <div class="bonus-item-icon">📅</div>
+          <div class="bonus-item-content">
+            <h4>7-Day Practice Tracker</h4>
+            <p>Sistem latihan harian yang terstruktur, cukup 10–15 menit sehari, biar pola baru ini jadi otomatis dalam seminggu.</p>
+          </div>
+        </div>
+        <div class="bonus-item">
+          <div class="bonus-item-icon">⚡</div>
+          <div class="bonus-item-content">
+            <h4>Cheat Sheet Upgrade Kalimat</h4>
+            <p>Daftar kata pelemah yang harus langsung dibuang, plus penggantinya yang jauh lebih berbobot. Tempel di meja kerja kamu.</p>
+          </div>
+        </div>
+        <div class="bonus-item">
+          <div class="bonus-item-icon">🎯</div>
+          <div class="bonus-item-content">
+            <h4>Swipe File Template Hook Pembuka</h4>
+            <p>Kumpulan formula kalimat pembuka yang langsung nyolong fokus orang, siap pakai buat meeting, presentasi, atau email.</p>
+          </div>
+        </div>
+        <div class="bonus-item">
+          <div class="bonus-item-icon">✓</div>
+          <div class="bonus-item-content">
+            <h4>Self-Check Presence 10 Detik</h4>
+            <p>4 pertanyaan yang cukup kamu jawab sebelum masuk ruangan mana pun buat mastiin presence kamu udah terkalibrasi.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     SECTION 6 — VALUE STACK + ORDER
+============================================ -->
+<section class="section section--mid" id="order">
+  <div class="container">
+    <div class="section-header reveal" style="text-align: center;">
+      <div class="gold-line" style="margin: 0 auto 20px;"></div>
+      <h2>Yang Kamu Dapet Hari Ini</h2>
+    </div>
+
+    <div class="value-table reveal reveal-delay-1">
+      <div class="value-row">
+        <span class="value-label">The Influence Code Playbook</span>
+        <span class="value-price">Rp 297.000</span>
+      </div>
+      <div class="value-row">
+        <span class="value-label">The Ultimate Implementation Pack</span>
+        <span class="value-price">Rp 197.000</span>
+      </div>
+      <div class="value-row value-row--total">
+        <span class="value-label total-label">Total Nilai</span>
+        <span class="value-price total-price" style="color: var(--text-muted);">Rp 494.000</span>
+      </div>
+      <div class="value-row value-row--today">
+        <span class="value-label today-label">Harga Hari Ini</span>
+        <span class="value-price today-price" id="price-flash">Rp 178.000</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SECTION CTA MAIN
+============================================ -->
+<section class="section-cta-main">
+  <div class="container" style="text-align: center;">
+    <div class="reveal">
+      <span class="label">Ambil Sekarang</span>
+      <div class="cta-price-display">Rp 178.000</div>
+      <p class="cta-price-original">Hemat Rp 316.000 dari harga normal</p>
+      <a href="#" class="btn-primary btn-primary--large">
+        Aku Mau Ini — Rp178.000 <span class="arrow">→</span>
+      </a>
+      <div class="trust-badges" style="justify-content: center; margin-top: 20px;">
+        <span class="trust-badge"><span class="dot"></span>Akses Seumur Hidup</span>
+        <span class="trust-badge"><span class="dot"></span>Download Langsung</span>
+        <span class="trust-badge"><span class="dot"></span>Pembayaran Aman</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     SECTION 7 — UPSELL SEED
+============================================ -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="gold-line"></div>
+      <h2>Satu Hal Lagi — Buat Situasi Yang Tekanannya Paling Tinggi</h2>
+    </div>
+
+    <p class="reveal" style="color: var(--text-muted); margin-bottom: 20px;">
+      The Influence Code ngajarin kamu cara ngomong berbobot di situasi normal. Tapi ada momen-momen tertentu di mana "normal" gak berlaku.
+    </p>
+
+    <div class="upsell-card reveal reveal-delay-1">
+      <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px;">
+        <span style="background: var(--gold-glow); border: 1px solid var(--gold-border); color: var(--gold); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 12px; border-radius: 2px;">Upsell</span>
+        <span style="font-family: var(--font-heading); font-size: 20px; color: var(--text-primary);">The Pressure Playbook</span>
+      </div>
+
+      <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 15px;">
+        Bos motong presentasi kamu di tengah jalan. Ide kamu diserobot rekan kerja. Kamu harus negosiasi gaji, hadapin klien yang lagi emosi, atau pitch ke orang yang dari awal udah skeptis.
+      </p>
+
+      <p style="color: var(--text-primary); margin-bottom: 24px; font-size: 15px;">
+        <strong>30 skenario tekanan tinggi.</strong> Masing-masing lengkap dengan script siap pakai, panduan nada bicara, dan body language cue — biar kamu gak blank pas momen paling nentuin itu datang.
+      </p>
+
+      <p style="color: var(--text-subtle); font-size: 14px; font-style: italic;">
+        Kamu bakal ditawarin ini setelah checkout. Gak wajib. Tapi kalau kamu tau situasi kayak gitu tinggal nunggu waktu — kamu bakal nyesel gak ambil sekarang.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     SECTION: TRANSFORMATION IMAGE
+============================================ -->
+<section class="section section--mid">
+  <div class="container">
+    <div class="transformation-wrap reveal">
+      <img
+        src="https://drive.google.com/thumbnail?id=12PjrFqi9rw7UngeH-k-70xuLRxRnTfXB&sz=w1000"
+        alt="Seseorang berbicara dengan penuh keyakinan"
+        loading="lazy"
+      >
+      <div class="transformation-overlay">
+        <p class="transformation-caption">
+          Orang yang selalu didengar bukan selalu yang paling pintar di ruangan.<br>
+          Mereka yang paling <em>susah diabaikan.</em>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     SECTION 8 — HOW IT WORKS
+============================================ -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="gold-line"></div>
+      <h2>Mulai Dalam 3 Langkah</h2>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-number">01</div>
+        <div class="step-title">Order &amp; Langsung Download</div>
+        <p class="step-desc">Setelah bayar, akses langsung. Gak perlu nunggu, gak perlu install apapun.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-number">02</div>
+        <div class="step-title">Mulai Dari Bagian Yang Paling Relevan</div>
+        <p class="step-desc">Gak harus dari halaman satu. Langsung ke situasi yang paling sering kamu hadapin.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-3">
+        <div class="step-number">03</div>
+        <div class="step-title">Pakai Satu Pola Hari Ini Juga</div>
+        <p class="step-desc">Bukan besok. Satu pola, satu situasi, hari ini — dan kamu udah mulai berubah.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     SECTION 9 — FAQ
+============================================ -->
+<section class="section section--mid">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="gold-line"></div>
+      <h2>Beberapa Hal Yang Mungkin Lagi Kamu Pikirin</h2>
+    </div>
+
+    <div class="faq-list reveal reveal-delay-1">
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Ini cocok buat introvert?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>Justru dibuat buat yang gak mau kedengeran agresif atau "besar-besaran." Semua polanya bekerja dengan cara ngomong yang tenang dan terkontrol — bukan yang keras dan dominan.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Berapa lama sampai kerasa hasilnya?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>Sebagian orang udah ngerasain bedanya sejak percakapan pertama setelah baca Bab 1. Perubahan yang konsisten biasanya kerasa setelah 7 hari latihan pakai tracker yang ada di Implementation Pack.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Ini teori semua atau langsung bisa dipake?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>80% isinya pola praktis, template, dan contoh konkret. Teori ada cuma sebagai penjelasan kenapa sesuatu works — bukan sebagai materi utama.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Aku udah baca banyak buku komunikasi. Bedanya apa?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>Kebanyakan buku komunikasi ngajarin cara ngomong yang "baik dan benar." Playbook ini dirancang buat satu tujuan: bikin cara ngomongmu lebih susah diabaikan. Beda positioning, beda isi.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Format filenya apa dan gimana cara aksesnya?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>Format PDF, langsung bisa dibuka di HP atau laptop. Setelah pembayaran berhasil, kamu langsung dapat link download — gak perlu nunggu konfirmasi manual.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     FINAL CLOSE
+============================================ -->
+<section class="final-close">
+  <div class="container">
+    <div class="reveal">
+      <p class="text-muted" style="font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Satu Keputusan</p>
+      <p class="headline-gold">Setiap Hari Kamu Ngomong Dengan<br>Cara Yang Sama, Hasilnya Bakal Sama.</p>
+      <p style="color: var(--text-muted); max-width: 480px; margin: 0 auto 40px; font-size: 16px;">
+        Pola bisa berubah. Cara ngomong bisa dilatih. Dan perubahan itu bisa mulai hari ini — dengan satu keputusan kecil.
+      </p>
+      <a href="#" class="btn-primary btn-primary--large">
+        Aku Mau Mulai Sekarang — Rp178.000 <span class="arrow">→</span>
+      </a>
+      <div class="final-badges">
+        <span class="final-badge"><span class="check">✓</span> The Influence Code</span>
+        <span class="final-badge"><span class="check">✓</span> Ultimate Implementation Pack</span>
+        <span class="final-badge"><span class="check">✓</span> Akses Seumur Hidup</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     STICKY CTA — MOBILE ONLY
+============================================ -->
+<div class="sticky-cta" id="sticky-cta">
+  <a href="#order" class="btn-primary btn-primary--full">
+    Aku Mau Ini — Rp178.000 <span class="arrow">→</span>
+  </a>
+</div>
+
+<!-- ============================================
+     JAVASCRIPT
+============================================ -->
+<script>
+  // --- Intersection Observer: Reveal on scroll ---
+  const revealEls = document.querySelectorAll('.reveal, .gold-line, .pillar-card');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible', 'revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealEls.forEach(el => observer.observe(el));
+
+  // --- FAQ Accordion ---
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-question').addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // --- Sticky CTA: hide when original CTA visible ---
+  const stickyCta = document.getElementById('sticky-cta');
+  const heroCtaWrap = document.querySelector('.hero-cta-wrap');
+
+  if (stickyCta && heroCtaWrap) {
+    const heroObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        stickyCta.style.opacity = entry.isIntersecting ? '0' : '1';
+        stickyCta.style.pointerEvents = entry.isIntersecting ? 'none' : 'auto';
+      });
+    }, { threshold: 0.5 });
+    heroObserver.observe(heroCtaWrap);
+  }
+
+  // --- Price flash animation on scroll ---
+  const priceEl = document.getElementById('price-flash');
+  if (priceEl) {
+    const priceObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          priceEl.style.animation = 'goldFlash 0.8s ease forwards';
+          priceObserver.unobserve(priceEl);
+        }
+      });
+    }, { threshold: 0.5 });
+    priceObserver.observe(priceEl);
+  }
+</script>
+
+</body>
+</html>
