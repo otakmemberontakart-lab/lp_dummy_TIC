@@ -25,8 +25,8 @@
     --gold-border:   rgba(201, 168, 76, 0.25);
 
     --text-primary:  #F5F0E8;
-    --text-muted:    #A89880;
-    --text-subtle:   #6B5B45;
+    --text-muted:    #C4B89A;
+    --text-subtle:   #8A7A62;
 
     --divider:       #2A2218;
 
@@ -43,7 +43,11 @@
   ============================================ */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+  }
 
   body {
     background: var(--bg-primary);
@@ -53,6 +57,8 @@
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
   }
 
   img { max-width: 100%; display: block; }
@@ -217,6 +223,7 @@
     align-items: center;
     gap: 60px;
     min-height: 100svh;
+    overflow: hidden;
   }
 
   .hero-content {
@@ -259,7 +266,7 @@
 
   .hero-sub {
     font-size: clamp(15px, 1.8vw, 17px);
-    color: var(--text-muted);
+    color: #C8BFB0;
     line-height: 1.75;
     margin-bottom: 40px;
     animation: fadeUp 0.9s ease 0.25s both;
@@ -280,7 +287,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
+    object-position: center 25%;
   }
 
   .hero-image-wrap::after {
@@ -380,7 +387,7 @@
     align-items: center;
     gap: 6px;
     font-size: 12px;
-    color: var(--text-muted);
+    color: #C4B89A;
   }
 
   .trust-badge .dot {
@@ -471,7 +478,7 @@
 
   .pillar-desc {
     font-size: 14px;
-    color: var(--text-muted);
+    color: #BFB49A;
     line-height: 1.7;
   }
 
@@ -611,7 +618,7 @@
 
   .bonus-item-content p {
     font-size: 14px;
-    color: var(--text-muted);
+    color: #BFB49A;
     line-height: 1.6;
   }
 
@@ -716,7 +723,7 @@
 
   .cta-price-original {
     font-size: 16px;
-    color: var(--text-subtle);
+    color: #8A7A62;
     text-decoration: line-through;
     margin-bottom: 32px;
   }
@@ -781,7 +788,7 @@
 
   .step-desc {
     font-size: 14px;
-    color: var(--text-muted);
+    color: #BFB49A;
     line-height: 1.7;
   }
 
@@ -845,7 +852,7 @@
 
   .faq-answer p {
     font-size: 14px;
-    color: var(--text-muted);
+    color: #BFB49A;
     line-height: 1.75;
     border-top: 1px solid var(--divider);
     padding-top: 16px;
@@ -916,7 +923,7 @@
   }
 
   .final-close h2 {
-    color: var(--text-muted);
+    color: #C4B89A;
     margin-bottom: 16px;
   }
 
@@ -942,7 +949,7 @@
     align-items: center;
     gap: 6px;
     font-size: 12px;
-    color: var(--text-muted);
+    color: #C4B89A;
     background: var(--bg-elevated);
     border: 1px solid var(--divider);
     padding: 6px 14px;
@@ -986,21 +993,33 @@
      RESPONSIVE — MOBILE FIRST
   ============================================ */
   @media (max-width: 900px) {
+    .hero {
+      overflow: hidden;
+    }
+
     .hero-inner {
       grid-template-columns: 1fr;
       padding: 0;
       gap: 0;
+      width: 100%;
+      max-width: 100%;
     }
 
     .hero-content {
-      padding: 60px 24px 40px;
+      padding: 40px 20px 48px;
       order: 2;
+      width: 100%;
     }
 
     .hero-image-wrap {
       order: 1;
-      min-height: 360px;
-      height: 360px;
+      min-height: 340px;
+      height: 340px;
+      width: 100%;
+    }
+
+    .hero-image-wrap img {
+      object-position: center 20%;
     }
 
     .hero-image-wrap::after {
@@ -1008,10 +1027,6 @@
         to bottom,
         transparent 0%,
         var(--bg-primary) 90%
-      ), linear-gradient(
-        to top,
-        var(--bg-primary) 0%,
-        transparent 40%
       );
     }
 
@@ -1068,11 +1083,6 @@
 <section class="hero" id="top">
   <div class="hero-inner">
     <div class="hero-content">
-      <div class="hero-eyebrow">
-        <div class="hero-eyebrow-line"></div>
-        <span>Playbook · Karisma &amp; Otoritas</span>
-      </div>
-
       <h1>Kenapa Orang Yang<br>Lebih Kurang Pintar<br>Dari Kamu Bisa Lebih<br><em>Dihormatin</em> Saat Ngomong?!</h1>
 
       <p class="hero-sub">
@@ -1124,7 +1134,7 @@
       "Lah, itu kan yang tadi aku bilang?"
     </div>
 
-    <p class="reveal reveal-delay-3" style="color: var(--text-muted);">
+    <p class="reveal reveal-delay-3" style="color: #C4B89A;">
       Itu bukan kebetulan. Dan itu bukan karena mereka lebih pintar dari kamu.
     </p>
   </div>
@@ -1140,11 +1150,11 @@
     <div class="section-header reveal">
       <div class="gold-line"></div>
       <h2>Masalahnya Bukan Di Isi Kepala Kamu.</h2>
-      <h3 style="color: var(--text-muted); font-weight: 400; margin-top: 12px; font-family: var(--font-body); font-size: clamp(16px,2vw,18px);">Masalahnya Di Sinyal Yang Kamu Kirim Tanpa Sadar.</h3>
+      <h3 style="color: #C4B89A; font-weight: 400; margin-top: 12px; font-family: var(--font-body); font-size: clamp(16px,2vw,18px);">Masalahnya Di Sinyal Yang Kamu Kirim Tanpa Sadar.</h3>
     </div>
 
     <p class="reveal reveal-delay-1" style="margin-bottom: 20px;">
-      Selama ini mungkin kamu mikir masalahnya ada di rasa percaya diri. Atau pengalaman. Atau mungkin emang <em style="color:var(--text-muted); font-style:normal;">"bukan tipe yang enak didengar."</em>
+      Selama ini mungkin kamu mikir masalahnya ada di rasa percaya diri. Atau pengalaman. Atau mungkin emang <em style="color:#C4B89A; font-style:normal;">"bukan tipe yang enak didengar."</em>
     </p>
 
     <p class="reveal reveal-delay-1" style="margin-bottom: 20px;">
@@ -1195,7 +1205,7 @@
       </div>
     </div>
 
-    <p class="reveal" style="text-align: center; margin-top: 36px; color: var(--text-muted); font-style: italic;">
+    <p class="reveal" style="text-align: center; margin-top: 36px; color: #C4B89A; font-style: italic;">
       Ketiga hal ini bisa dilatih. Bukan bakat. Bukan kepribadian bawaan. Tapi pola — yang bisa dipelajari dan langsung dipasang.
     </p>
   </div>
@@ -1227,7 +1237,7 @@
         <div class="product-tag">The Influence Code</div>
         <h3 class="reveal">Playbook praktis yang ngebangun Presence, Delivery, dan Authority lewat pola-pola bicara konkret yang langsung bisa kamu coba di situasi nyata.</h3>
 
-        <p class="reveal reveal-delay-1" style="margin-top: 16px; color: var(--text-muted);">
+        <p class="reveal reveal-delay-1" style="margin-top: 16px; color: #C4B89A;">
           Bukan ebook komunikasi umum. Bukan kumpulan tips motivasi. Bukan teori public speaking.
         </p>
 
@@ -1274,7 +1284,7 @@
       <h2>Biar Kamu Gak Cuma Baca —<br>Tapi Beneran Berubah Cara Ngomongnya</h2>
     </div>
 
-    <p class="reveal" style="color: var(--text-muted);">
+    <p class="reveal" style="color: #C4B89A;">
       Order hari ini, kamu juga dapet <strong style="color: var(--text-primary);">The Ultimate Implementation Pack</strong> — companion tool yang dirancang biar semua yang ada di playbook beneran masuk ke cara ngomongmu sehari-hari. Bukan cuma ngerti, tapi ngelakuin.
     </p>
 
@@ -1383,7 +1393,7 @@
       <h2>Satu Hal Lagi — Buat Situasi Yang Tekanannya Paling Tinggi</h2>
     </div>
 
-    <p class="reveal" style="color: var(--text-muted); margin-bottom: 20px;">
+    <p class="reveal" style="color: #C4B89A; margin-bottom: 20px;">
       The Influence Code ngajarin kamu cara ngomong berbobot di situasi normal. Tapi ada momen-momen tertentu di mana "normal" gak berlaku.
     </p>
 
@@ -1393,7 +1403,7 @@
         <span style="font-family: var(--font-heading); font-size: 20px; color: var(--text-primary);">The Pressure Playbook</span>
       </div>
 
-      <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 15px;">
+      <p style="color: #C4B89A; margin-bottom: 20px; font-size: 15px;">
         Bos motong presentasi kamu di tengah jalan. Ide kamu diserobot rekan kerja. Kamu harus negosiasi gaji, hadapin klien yang lagi emosi, atau pitch ke orang yang dari awal udah skeptis.
       </p>
 
@@ -1401,7 +1411,7 @@
         <strong>30 skenario tekanan tinggi.</strong> Masing-masing lengkap dengan script siap pakai, panduan nada bicara, dan body language cue — biar kamu gak blank pas momen paling nentuin itu datang.
       </p>
 
-      <p style="color: var(--text-subtle); font-size: 14px; font-style: italic;">
+      <p style="color: #8A7A62; font-size: 14px; font-style: italic;">
         Kamu bakal ditawarin ini setelah checkout. Gak wajib. Tapi kalau kamu tau situasi kayak gitu tinggal nunggu waktu — kamu bakal nyesel gak ambil sekarang.
       </p>
     </div>
@@ -1537,9 +1547,9 @@
 <section class="final-close">
   <div class="container">
     <div class="reveal">
-      <p class="text-muted" style="font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Satu Keputusan</p>
+      <p style="font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; color: #8A7A62;">Satu Keputusan</p>
       <p class="headline-gold">Setiap Hari Kamu Ngomong Dengan<br>Cara Yang Sama, Hasilnya Bakal Sama.</p>
-      <p style="color: var(--text-muted); max-width: 480px; margin: 0 auto 40px; font-size: 16px;">
+      <p style="color: #C4B89A; max-width: 480px; margin: 0 auto 40px; font-size: 16px;">
         Pola bisa berubah. Cara ngomong bisa dilatih. Dan perubahan itu bisa mulai hari ini — dengan satu keputusan kecil.
       </p>
       <a href="#" class="btn-primary btn-primary--large">
